@@ -12,4 +12,5 @@
     <string name="login_name">用户名</string>
     <string name="login_pwd">密码</string>
     <string name="login_btn">登录</string>
+    <string name="forget_password">忘记密码</string>
 </resources>
