@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.doumuecommerce.R;
+import com.doumuecommerce.management.ManageActivity;
 import com.doumuecommerce.utils.HttpUtils;
 import com.google.gson.Gson;
 
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userName = editTextUserName.getText().toString().trim();
-                userName = editTextUserPWD.getText().toString().trim();
+                userPWD = editTextUserPWD.getText().toString().trim();
                 if(TextUtils.isEmpty(userName)){
                     Toast.makeText(LoginActivity.this,"请输入用户名",Toast.LENGTH_SHORT).show();
                     return;
@@ -80,7 +81,11 @@ public class LoginActivity extends AppCompatActivity {
                         final String httpUrl = "http://demo.jeesite.com/js/a/login";
                         LoginService loginService = new LoginService();
 
-                        String url = loginService.getAppLoginURLByFirstTime(httpUrl,loginService.getLoginKey(userName,userName));
+                        String url = loginService.getAppLoginURLByFirstTime(httpUrl,loginService.getLoginKey(userName,userPWD));
+
+//                        if(!"".equals(getLoginStatus())){
+//                            url = loginService.getAppLoginURLBySecondTime(httpUrl,loginService.getLoginKey(userName,userPWD),getLoginStatus());
+//                        }
 
                         HttpUtils httpUtils = new HttpUtils();
                         String resultString = httpUtils.sendRequestGet(url);
@@ -91,13 +96,22 @@ public class LoginActivity extends AppCompatActivity {
                             if("true".equals(status)){
                                 ResultLoginSuccess resultLoginSuccess = gson.fromJson(resultString,ResultLoginSuccess.class);
                                 /** 保存登录状态和sessionId **/
-                                saveLoginStatus(true,resultLoginSuccess.getSessionid());
-                                //Intent it=new Intent(LoginActivity.this, MainActivity.class);
+ //                               saveLoginStatus(true,resultLoginSuccess.getSessionid());
+
+                                Intent it = new Intent(LoginActivity.this, ManageActivity.class);
+
+                                /** 使用Bundle在Activity之间传值 **/
+//                                Bundle bundle = new Bundle();
+//                                bundle.putSerializable("resultLoginSuccess",resultLoginSuccess);
+//                                it.putExtras(bundle);
+
+                                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(it);
                             }
                             if("false".equals(status)){
                                 ResultLoginError resultLoginError = gson.fromJson(resultString,ResultLoginError.class);
-                                saveLoginStatus(false,resultLoginError.getSessionid());
-                                Toast.makeText (getApplicationContext(),"用户或密码错误", Toast.LENGTH_LONG ).show();
+//                                saveLoginStatus(false,resultLoginError.getSessionid());
+                                threadRunToToast("用户或密码错误");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -111,11 +125,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void saveLoginStatus(boolean status,String sessionId){
-        SharedPreferences loginTImes = getSharedPreferences("loginInfo",MODE_PRIVATE);
-        SharedPreferences.Editor editor = loginTImes.edit();
+        SharedPreferences loginTimes = getSharedPreferences("loginInfo",MODE_PRIVATE);
+        SharedPreferences.Editor editor = loginTimes.edit();
         editor.putBoolean("result",status);
         editor.putString("sessionId",sessionId);
         editor.commit();
 
+    }
+
+    private String getLoginStatus(){
+        String sessionId = "";
+        SharedPreferences loginTimes = getSharedPreferences("loginInfo",MODE_PRIVATE);
+        if("true".equals(loginTimes.getString("result",""))){
+            sessionId = loginTimes.getString("sessionId","");
+        }
+        return sessionId;
+    }
+
+    /**
+     * 在 主线程 子线程 中提示，属于UI操作
+     */
+    private void threadRunToToast(final String text) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
