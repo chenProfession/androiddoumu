@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.doumuecommerce.R;
 import com.doumuecommerce.authorization.LoginActivity;
 
 import java.util.Timer;

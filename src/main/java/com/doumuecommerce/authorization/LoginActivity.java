@@ -2,6 +2,8 @@ package com.doumuecommerce.authorization;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,8 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.doumuecommerce.utils.DesUtils;
-import com.doumuecommerce.welcome.R;
+import com.doumuecommerce.R;
+import com.doumuecommerce.utils.HttpUtils;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -57,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 userName = editTextUserName.getText().toString().trim();
-                userPWD = editTextUserPWD.getText().toString().trim();
+                userName = editTextUserPWD.getText().toString().trim();
                 if(TextUtils.isEmpty(userName)){
                     Toast.makeText(LoginActivity.this,"请输入用户名",Toast.LENGTH_SHORT).show();
                     return;
@@ -67,12 +73,49 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                /** 用户和密码加密 thinkgem,jeesite,com **/
-                String secretKey = "thinkgem,jeesite,com";
-                String username = DesUtils.encode(userName, secretKey);
-                String password = DesUtils.encode(userPWD, secretKey);
+                /** 用户和密码加密 登录 **/
+                new Thread(){
+                    @Override
+                    public void run() {
+                        final String httpUrl = "http://demo.jeesite.com/js/a/login";
+                        LoginService loginService = new LoginService();
+
+                        String url = loginService.getAppLoginURLByFirstTime(httpUrl,loginService.getLoginKey(userName,userName));
+
+                        HttpUtils httpUtils = new HttpUtils();
+                        String resultString = httpUtils.sendRequestGet(url);
+                        try {
+                            JSONObject jsonObject = new JSONObject(resultString);
+                            String status = jsonObject.getString("result");
+                            Gson gson = new Gson();
+                            if("true".equals(status)){
+                                ResultLoginSuccess resultLoginSuccess = gson.fromJson(resultString,ResultLoginSuccess.class);
+                                /** 保存登录状态和sessionId **/
+                                saveLoginStatus(true,resultLoginSuccess.getSessionid());
+                                //Intent it=new Intent(LoginActivity.this, MainActivity.class);
+                            }
+                            if("false".equals(status)){
+                                ResultLoginError resultLoginError = gson.fromJson(resultString,ResultLoginError.class);
+                                saveLoginStatus(false,resultLoginError.getSessionid());
+                                Toast.makeText (getApplicationContext(),"用户或密码错误", Toast.LENGTH_LONG ).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+
 
             }
         });
+    }
+
+    private void saveLoginStatus(boolean status,String sessionId){
+        SharedPreferences loginTImes = getSharedPreferences("loginInfo",MODE_PRIVATE);
+        SharedPreferences.Editor editor = loginTImes.edit();
+        editor.putBoolean("result",status);
+        editor.putString("sessionId",sessionId);
+        editor.commit();
+
     }
 }
