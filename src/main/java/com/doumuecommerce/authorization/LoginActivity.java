@@ -101,9 +101,9 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent it = new Intent(LoginActivity.this, ManageActivity.class);
 
                                 /** 使用Bundle在Activity之间传值 **/
-//                                Bundle bundle = new Bundle();
-//                                bundle.putSerializable("resultLoginSuccess",resultLoginSuccess);
-//                                it.putExtras(bundle);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("resultLoginSuccess",resultLoginSuccess);
+                                it.putExtras(bundle);
 
                                 it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(it);

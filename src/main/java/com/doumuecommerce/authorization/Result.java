@@ -6,6 +6,15 @@ public class Result {
     private String message;
     private String sessionid;
 
+    public Result() {
+    }
+
+    public Result(String result, String message, String sessionid) {
+        this.result = result;
+        this.message = message;
+        this.sessionid = sessionid;
+    }
+
     public String getResult() {
         return result;
     }
