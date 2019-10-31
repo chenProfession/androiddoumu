@@ -2,14 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/tab_one"
         android:icon="@android:drawable/ic_menu_info_details"
         android:orderInCategory="100"
         android:title="订单" />
     <item
+        android:id="@+id/tab_two"
         android:icon="@android:drawable/ic_menu_info_details"
         android:orderInCategory="100"
         android:title="产品" />
     <item
+        android:id="@+id/tab_three"
         android:icon="@android:drawable/ic_menu_help"
         android:orderInCategory="100"
         android:title="我的" />
