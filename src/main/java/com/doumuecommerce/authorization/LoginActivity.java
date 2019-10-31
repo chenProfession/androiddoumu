@@ -97,28 +97,32 @@ public class LoginActivity extends AppCompatActivity {
 
                         HttpUtils httpUtils = new HttpUtils();
                         String resultString = httpUtils.sendRequestGet(url);
-                        try {
-                            JSONObject jsonObject = new JSONObject(resultString);
-                            String status = jsonObject.getString("result");
-                            Gson gson = new Gson();
-                            if("true".equals(status)){
-                                ResultLoginSuccess resultLoginSuccess = gson.fromJson(resultString,ResultLoginSuccess.class);
-                                Intent it = new Intent(LoginActivity.this, ManageActivity.class);
+                        if(resultString != null) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(resultString);
+                                String status = jsonObject.getString("result");
+                                Gson gson = new Gson();
+                                if ("true".equals(status)) {
+                                    ResultLoginSuccess resultLoginSuccess = gson.fromJson(resultString, ResultLoginSuccess.class);
+                                    Intent it = new Intent(LoginActivity.this, ManageActivity.class);
 
-                                /** 使用Bundle在Activity之间传值 **/
-                                Bundle bundle = new Bundle();
-                                bundle.putSerializable("resultLoginSuccess", resultLoginSuccess);
-                                it.putExtras(bundle);
+                                    /** 使用Bundle在Activity之间传值 **/
+                                    Bundle bundle = new Bundle();
+                                    bundle.putSerializable("resultLoginSuccess", resultLoginSuccess);
+                                    it.putExtras(bundle);
 
-                                it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                startActivity(it);
+                                    it.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                    startActivity(it);
+                                }
+                                if ("false".equals(status)) {
+                                    ResultLoginError resultLoginError = gson.fromJson(resultString, ResultLoginError.class);
+                                    threadRunToToast("用户或密码错误");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            if("false".equals(status)){
-                                ResultLoginError resultLoginError = gson.fromJson(resultString,ResultLoginError.class);
-                                threadRunToToast("用户或密码错误");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            threadRunToToast("网络错误，请重试......");
                         }
                     }
                 }.start();
