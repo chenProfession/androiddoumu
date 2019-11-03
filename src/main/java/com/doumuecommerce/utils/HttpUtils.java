@@ -1,10 +1,14 @@
 package com.doumuecommerce.utils;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -241,4 +245,6 @@ public class HttpUtils {
         }
         return null ;
     }
+
+
 }

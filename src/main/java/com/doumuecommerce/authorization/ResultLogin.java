@@ -1,15 +1,15 @@
 package com.doumuecommerce.authorization;
 
-public class Result {
+public class ResultLogin {
 
     private String result;
     private String message;
     private String sessionid;
 
-    public Result() {
+    public ResultLogin() {
     }
 
-    public Result(String result, String message, String sessionid) {
+    public ResultLogin(String result, String message, String sessionid) {
         this.result = result;
         this.message = message;
         this.sessionid = sessionid;

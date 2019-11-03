@@ -1,5 +1,7 @@
 package com.doumuecommerce.utils;
 
+import android.graphics.Bitmap;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.doumuecommerce.authorization.LoginService;
@@ -118,4 +120,5 @@ public class HttpUtilsTest {
 
         Assert.assertNotNull(resultString);
     }
+
 }

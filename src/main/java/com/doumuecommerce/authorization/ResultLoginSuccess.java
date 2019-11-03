@@ -3,7 +3,7 @@ package com.doumuecommerce.authorization;
 
 import java.io.Serializable;
 
-public class ResultLoginSuccess extends Result implements Serializable {
+public class ResultLoginSuccess extends ResultLogin implements Serializable {
 
     private User user;
 

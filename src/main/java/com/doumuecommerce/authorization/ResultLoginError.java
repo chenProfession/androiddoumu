@@ -1,6 +1,6 @@
 package com.doumuecommerce.authorization;
 
-public class ResultLoginError extends Result {
+public class ResultLoginError extends ResultLogin {
 
     private String username;
     private boolean rememberMe;
@@ -56,4 +56,5 @@ public class ResultLoginError extends Result {
     public void setIsValidCodeLogin(String isValidCodeLogin) {
         this.isValidCodeLogin = isValidCodeLogin;
     }
+
 }
