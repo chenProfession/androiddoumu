@@ -1,12 +1,15 @@
 package com.doumuecommerce.resultsearch;
 
 
+import com.doumuecommerce.customer.Customer;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class ResultSearch<T> {
+public class ResultSearchCustomer implements Serializable {
     private int pageNo;
     private int count;
-    private List<T> list;
+    private List<Customer> list;
 
     public int getPageNo() {
         return pageNo;
@@ -24,11 +27,11 @@ public class ResultSearch<T> {
         this.count = count;
     }
 
-    public List<T> getList() {
+    public List<Customer> getList() {
         return list;
     }
 
-    public void setList(List<T> list) {
+    public void setList(List<Customer> list) {
         this.list = list;
     }
 }

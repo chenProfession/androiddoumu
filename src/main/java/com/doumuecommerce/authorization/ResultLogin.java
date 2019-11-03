@@ -1,6 +1,8 @@
 package com.doumuecommerce.authorization;
 
-public class ResultLogin {
+import java.io.Serializable;
+
+public class ResultLogin implements Serializable {
 
     private String result;
     private String message;

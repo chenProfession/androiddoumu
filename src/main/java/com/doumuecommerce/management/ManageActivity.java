@@ -1,5 +1,6 @@
 package com.doumuecommerce.management;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.doumuecommerce.R;
+import com.doumuecommerce.authorization.ResultLoginSuccess;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class ManageActivity extends AppCompatActivity {
 
     private BottomNavigationView bnView;
     private ViewPager viewPager;
+    private String sessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,10 @@ public class ManageActivity extends AppCompatActivity {
 
         bnView = findViewById(R.id.bottomNavigationView);
         viewPager = findViewById(R.id.viewPager);
+
+        Intent intent =getIntent();
+        ResultLoginSuccess loginSuccess = (ResultLoginSuccess) intent.getSerializableExtra("resultLoginSuccess");
+        sessionId = loginSuccess.getSessionid();
 
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new FragmentOne());
@@ -75,5 +82,9 @@ public class ManageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 }

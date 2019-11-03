@@ -5,7 +5,7 @@
         android:id="@+id/tab_one"
         android:icon="@android:drawable/ic_menu_info_details"
         android:orderInCategory="100"
-        android:title="订单" />
+        android:title="顾客" />
     <item
         android:id="@+id/tab_two"
         android:icon="@android:drawable/ic_menu_info_details"

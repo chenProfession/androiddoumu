@@ -1,6 +1,8 @@
 package com.doumuecommerce.customer;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable {
     private String id;
     private String updateDate;
     private String updateBy;
@@ -11,7 +13,10 @@ public class Customer {
     private String email;
     private String avatarUrl;
 
-    public Customer(String userName,String avatarUrl) {
+    public Customer() {
+    }
+
+    public Customer(String userName, String avatarUrl) {
         this.userName = userName;
         this.avatarUrl = avatarUrl;
     }

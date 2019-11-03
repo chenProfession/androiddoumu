@@ -1,6 +1,8 @@
 package com.doumuecommerce.authorization;
 
-public class ResultLoginError extends ResultLogin {
+import java.io.Serializable;
+
+public class ResultLoginError extends ResultLogin implements Serializable {
 
     private String username;
     private boolean rememberMe;
