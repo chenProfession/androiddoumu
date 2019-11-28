@@ -92,8 +92,8 @@ public class FragmentOne extends Fragment {
             }
         }.start();
 
-        ListView listView = getActivity().findViewById(R.id.user_list);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //ListView listView = getActivity().findViewById(R.id.user_list);
+        userlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Customer customer = customers.get(position);

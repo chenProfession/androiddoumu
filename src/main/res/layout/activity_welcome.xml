@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context=".WelcomeActivity">
+    tools:context="com.doumuecommerce.welcome.WelcomeActivity">
 
     <TextView
         android:id="@+id/textVersion"

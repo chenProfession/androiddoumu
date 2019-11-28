@@ -17,4 +17,8 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="lastLoginIp">上次登录地址：</string>
+    <string name="lastLoginDate">上次登录时间：</string>
+    <string name="new_pwd">更新密码：</string>
+    <string name="button_new_pwd">更新密码</string>
 </resources>

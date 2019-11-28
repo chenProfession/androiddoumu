@@ -91,10 +91,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         String url = loginService.getAppLoginURLByFirstTime(httpUrl,loginService.getLoginKey(userName,userPWD));
 
-//                        if(i > 0 && sessionId != null){
-//                            url = loginService.getAppLoginURLBySecondTime(httpUrl,loginService.getLoginKey(userName,userPWD),sessionId);
-//                        }
-
                         HttpUtils httpUtils = new HttpUtils();
                         String resultString = httpUtils.sendRequestGet(url);
                         if(resultString != null) {
